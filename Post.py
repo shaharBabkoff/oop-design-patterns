@@ -10,6 +10,7 @@ class Post:
         self.liked_by = []
         self.comments = []
         self.observers = []
+        user.notify_observers(f"{user.username} has a new post")
 
     def add_observer(self, observer):
         self.observers.append(observer)
@@ -34,16 +35,13 @@ class Post:
             self.notify_observers(f"{user.username} commented on your post")
             print(f"notification to {self.user.username}: {user.username} commented on your post: {text}")
 
-    def display(self):
-        pass  # Implemented in subclasses
-
 
 class TextPost(Post):
     def __init__(self, user, content):
         super().__init__(user, content)
 
-    def display(self):
-        print(f"{self.user.username} published a post:\n{self.content}\n")
+    def __str__(self):
+        return f"{self.user.username} published a post:\n{self.content}\n"
 
 
 class ImagePost(Post):
@@ -52,15 +50,17 @@ class ImagePost(Post):
         self.image_path = content
 
     def display(self):
-        print(f"{self.user.username} posted a picture\n")
+        print(f"Shows picture")
 
         try:
             plt.imshow(plt.imread(self.image_path))
             plt.title(self.user.use)
             plt.show()
         except FileNotFoundError:
-            print(f"Image file {self.image_path} not found.\n")
+            print(f"Image file {self.image_path} not found.")
 
+    def __str__(self):
+        return f"{self.user.username} posted a picture\n"
 
 class SalePost(Post):
     def __init__(self, user, content, price, location):
@@ -68,6 +68,14 @@ class SalePost(Post):
         self.price = price
         self.location = location
         self.is_available = True
+
+    def __str__(self):
+        if self.is_available:
+            return (f"{self.user.username} posted a product for sale:\n For sale! {self.content},"
+                    f" price: {self.price}, pickup from: {self.location}\n")
+        else:
+            return (f"{self.user.username} posted a product for sale:\nSold! {self.content},"
+                    f" price: {self.price}, pickup from: {self.location}\n")
 
     def discount(self, percentage, password):
         if self.user.password == password:
@@ -80,11 +88,5 @@ class SalePost(Post):
     def sold(self, password):
         if self.user.password == password:
             self.is_available = False
-        print(f"{self.user.username}'s product is sold\n")
-
-    def display(self):
-        availability_status = "Available" if self.is_available else "Sold"
-        print(f"{self.user.username} posted a product for sale:")
-        print(f"For sale! {self.content}, price: {self.price}, pickup from: {self.location}\n")
-
+        print(f"{self.user.username}'s product is sold")
 
