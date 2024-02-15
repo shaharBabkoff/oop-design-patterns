@@ -7,6 +7,10 @@ class SocialNetwork:
         self.users = {}
         print("The social network " + self.name + " was created!")
 
+    def __str__(self):
+        users_info = [str(self.users[username]) for username in self.users]  # List comprehension to get user info
+        return f"{self.name} social network:\n" + "\n".join(users_info)
+
     def sign_up(self, username: str, password: str):
         if username in self.users:
             print("username already taken")
