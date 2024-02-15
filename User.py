@@ -1,7 +1,6 @@
 import Post
 
 
-
 class User:
     def __init__(self, username: str, password: str):
         self.username = username
@@ -11,6 +10,10 @@ class User:
         self.posts = []
         self.notifications = []
         self.is_online = True
+
+    def __str__(self):
+        return (f"User name: {self.username}, Number of posts: {len(self.posts)}"
+                f", Number of followers: {len(self.observers)}")
 
     def add_observer(self, observer):
         self.observers.append(observer)
@@ -61,8 +64,8 @@ class User:
                 return None
             self.posts.append(post)
             post.add_observer(self)
-            self.notify_observers(f"{self.username} has a new post")
-            post.display()
+            # self.notify_observers(f"{self.username} has a new post")
+            print(post)
 
             return post
 
