@@ -33,7 +33,8 @@ class Post:
         self.liked_by = []
         self.comments = []
         self.observers = []
-        self.notify_observers(f"{user.username} has a new post")
+        user.notify_observers(f"{user.username} has a new post")
+
 
     # here on the code we will use "observer" design pattern:
     # the post is observable and this are the methods that need to be implemented (as we learned on class)
@@ -74,7 +75,7 @@ class TextPost(Post):
         super().__init__(user, content)
 
     def __str__(self):
-        return f"{self.user.username} published a post:\n{self.content}\n"
+        return f'{self.user.username} published a post:\n"{self.content}"\n'
 
 
 class ImagePost(Post):
@@ -89,7 +90,7 @@ class ImagePost(Post):
             plt.imshow(image)
             plt.axis('off')  # Hide axes for a cleaner look
             plt.show()
-            print(f"shows picture")
+            print(f"Shows picture")
         except FileNotFoundError:
             print(f"Image file {self.image_path} not found.")
 
