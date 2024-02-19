@@ -78,22 +78,23 @@ class TextPost(Post):
 
 
 class ImagePost(Post):
-    def __init__(self, user, content):
-        super().__init__(user, content)
-        self.image_path = content
-        # self.notify_observers(f"{user.username} has a new post")
+    def __init__(self, user, image_path):
+        super().__init__(user, "")  # Call the parent constructor with empty content
+        self.image_path = image_path
 
     def display(self):
-        print(f"Shows picture")
-
+        # Use matplotlib to display the image
         try:
-            plt.imshow(plt.imread(self.image_path))
-            plt.title(self.user.use)
+            image = plt.imread(self.image_path)
+            plt.imshow(image)
+            plt.axis('off')  # Hide axes for a cleaner look
             plt.show()
+            print(f"shows picture")
         except FileNotFoundError:
             print(f"Image file {self.image_path} not found.")
 
     def __str__(self):
+        # Text representation of the ImagePost only includes the image path
         return f"{self.user.username} posted a picture\n"
 
 
@@ -106,7 +107,7 @@ class SalePost(Post):
 
     def __str__(self):
         if self.is_available:
-            return (f"{self.user.username} posted a product for sale:\n For sale! {self.content},"
+            return (f"{self.user.username} posted a product for sale:\nFor sale! {self.content},"
                     f" price: {self.price}, pickup from: {self.location}\n")
         else:
             return (f"{self.user.username} posted a product for sale:\nSold! {self.content},"
@@ -116,7 +117,7 @@ class SalePost(Post):
         if self.user.password == password:
             if self.is_available:
                 self.price *= (1 - percentage / 100)
-                print(f"Discount on {self.user.username} product! the new price is: {self.price}\n")
+                print(f"Discount on {self.user.username} product! the new price is: {self.price}")
         else:
             pass
 
@@ -124,4 +125,3 @@ class SalePost(Post):
         if self.user.password == password:
             self.is_available = False
         print(f"{self.user.username}'s product is sold")
-
