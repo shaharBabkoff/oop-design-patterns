@@ -1,4 +1,4 @@
-from Post import PostFactory, PostTypes
+from Post import PostFactory, PostTypes, Post
 
 
 class User:
