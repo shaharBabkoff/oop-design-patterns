@@ -3,16 +3,16 @@ from User import User
 
 class SocialNetwork:
 
-    __instance = None  # for singelton design pattern
+    __instance__ = None  # for singelton design pattern
 
 # this method create a new SocialNetwork iff it wasn't created before
 
     def __new__(cls, name):
         # If an instance does not exist, create one
-        if cls.__instance is None:
-            cls.__instance = super().__new__(cls)
+        if cls.__instance__ is None:
+            cls.__instance__ = super().__new__(cls)
             # If an instance does exist, return the instance
-        return cls.__instance
+        return cls.__instance__
 
     def __init__(self, name: str):
         self.name = name
