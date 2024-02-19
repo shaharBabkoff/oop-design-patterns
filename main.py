@@ -32,10 +32,10 @@ def main():
                                  "he discovered the Americas, changing the course of history forever.")
     #  Creating image post
     p2 = u4.publish_post("Image", 'image1.jpg')
-    #
+
      # Creating sale post
     p3 = u3.publish_post("Sale", "Toyota prius 2012", 42000, "Haifa")
-    #
+
     # Creating likes and comments
     p2.like(u4)
     p1.like(u4)
@@ -48,8 +48,8 @@ def main():
     p1.comment(u5, "A pivotal moment")
     p3.comment(u2, "Exorbitant price")
     print()
-    #
-    # # Price reduction of the product for sale
+
+    # Price reduction of the product for sale
     p3.discount(10, "pass3")
     print()
 
@@ -78,8 +78,8 @@ def main():
     print()
 
     # Using log_in & log_out
-    # network.log_out("Charlie")
-    # network.log_in("Charlie", "pass3")
+    network.log_out("Charlie")
+    network.log_in("Charlie", "pass3")
     print()
 
     # User printing
