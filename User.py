@@ -33,13 +33,17 @@ class User:
         else:
             pass
 
+    def notify_observers(self, notification):
+        for follower in self.followers:
+            follower.update(self, notification)
+
     # when a user follow other user, the other user is added to the user following list
     # the user is added to the other user follower list
     def follow(self, other_user):
         if other_user not in self.following:
             self.following.append(other_user)
             other_user.followers.append(self)
-            print(self.username, "started following", other_user.username, "")
+            print(self.username, "started following", other_user.username)
 
     # when a user unfollow other user, the other user is removed from the user following list
     # the user is removed from the other user follower list
@@ -47,7 +51,7 @@ class User:
         if other_user in self.following:
             self.following.remove(other_user)
             other_user.followers.remove(self)
-            print(self.username, "unfollowed", other_user.username, "")
+            print(self.username, "unfollowed", other_user.username)
 
     # in this method we will use "factory" design pattern
     # here we are actually publishing a post. we don't need to handle here which type is the post of.
